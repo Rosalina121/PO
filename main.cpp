@@ -147,4 +147,4 @@ void intro() {
 int main() {
 
 	return 0;
-}//4 5 2 3,5 4 4 3 4 oceny
+}
