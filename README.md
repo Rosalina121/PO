@@ -10,7 +10,7 @@ Symluacja kończy się w 3 przypadkach:
 2. Użytkownik zbankrutuje zanim skończy symulację.
 3. Uzytkownik nie zainwestuje wystarczających środków by wydarzenie się rozpoczęło.
 
-#Harmonogram
+# Harmonogram
 
 Plan pracy na nastepne tygodnie:
 1. Dokończyć klasy obiektów programu oraz dopisać wszytstkie metody (interakcja, działanie). Dokończenie funkcji inicjalizujcych symulację.
