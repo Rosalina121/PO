@@ -19,5 +19,3 @@ Plan pracy na nastepne tygodnie:
 4. Dopracowanie kodu w taki sposób, by był jak najbardziej niezawodny (w skrócie idiotoodporny). Stworzenie systemu, który będzie przekazywał informacje o wydarzeniach w symulacji uzytkownikowi w postaci nagłówków w stylu serwisów informacyjnych. 
 
 Plan ten może ulec niewielkim zmianom (zależy od szybkosci pracy nad projektem i ewentualnymi problemami z realizacją ideii).
-
-Narazie wszystko jest w jednym pliku cpp ale zostanie to rodzielone by program był jak najbardziej czytelny.
