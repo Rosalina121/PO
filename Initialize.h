@@ -23,7 +23,7 @@ void init() {
 		cout << "You choose hard mode." << endl;
 		break;
 	default:
-		wallet = 6000000;
+		wallet = 2000000;
 		happiness = 500;
 		cout << "Deafulted to normal mode." << endl;
 		break;
@@ -50,12 +50,11 @@ bool venueChoice(Venue theVenue) {
 }
 
 void intro() {
-	default_random_engine generator;
-	uniform_int_distribution<int> distribution(0, 4);
+	srand(time(NULL));
 	int a, b;
-	a = distribution(generator);
+	a = rand() % 4;
 	do {
-		b = distribution(generator);
+		b = rand() % 4;
 	} while (b == a);
 
 	Sponsor sponsorList[5] = { G2A,Intel,Coke,Nvidia,God };
@@ -64,16 +63,21 @@ void intro() {
 	bool isLower = false;
 	string choice;
 
-	cout << "You have $" << wallet << " in your wallet." << endl;
+	cout << "You have $" << (int)wallet << " in your wallet." << endl;
 	cout << "Start by choosing on of the fllowing venues: " << endl;
 
 	Spodek.showVenue();
+	cout << endl;
 	Hala.showVenue();
+	cout << endl;
 	Wembley.showVenue();
+	cout << endl;
 	Seoul.showVenue();
+	cout << endl;
 
-	cout << "Type the full name of the desired venue: "; //make it less sensitive, like check just some of the name or sth.
-	cin >> choice;
+	cin.ignore();
+	cout << "Type the full name of the desired venue: " << endl; //make it less sensitive, like check just some of the name or sth.
+	getline(cin,choice);
 	do {
 		if (choice == "Spodek") {
 			tmp = venueChoice(Spodek);
@@ -95,29 +99,30 @@ void intro() {
 		}
 	} while (tmp == false);
 
-	cout << "You've chosen: " << actual.getName << " for the price of " << actual.getPrice << endl;
-	cout << "Current balance: " << wallet << endl;
-	cout << "Woah, what a surprise! Someone wants to sponsor your event.\nYou can choose which sponsor you'd like to collaborate with." << endl;
+	cout << "You've chosen: " << actual.getName() << " for the price of " << (int)actual.getPrice() << endl;
+	cout << "Current balance: " << (int)wallet << endl << endl;
+	cout << "Woah, what a surprise! Someone wants to sponsor your event.\nYou can choose which sponsor you'd like to collaborate with." << endl << endl;
 
-	cout << sponsorList[a].getName << " offers you " << sponsorList[a].getOffer << "$ for a exclusive sponsoring deal." << endl;
-	cout << sponsorList[b].getName << " made an offer for " << sponsorList[b].getOffer << "$ for being the main patron of the event." << endl;
-	cout << "Which one do you choose? ";
+	cout << sponsorList[a].getName() << " offers you $" << (int)sponsorList[a].getOffer() << " for a exclusive sponsoring deal." << endl;
+	cout << sponsorList[b].getName() << " made an offer for $" << (int)sponsorList[b].getOffer() << " for being the main patron of the event." << endl;
+	cout << "Which one do you choose? " << endl;
 	do {
-		cin >> choice;
-		if (choice == sponsorList[a].getName) {
-			wallet += sponsorList[a].getOffer;
+		getline(cin, choice);
+		if (choice == sponsorList[a].getName()) {
+			wallet += sponsorList[a].getOffer();
 		}
 		else {
-			if (choice == sponsorList[b].getName) {
-				wallet += sponsorList[b].getOffer;
+			if (choice == sponsorList[b].getName()) {
+				wallet += sponsorList[b].getOffer();
 			}
 			else {
 				cout << "Type in the name of the on of two sponsord you'd like to work with." << endl;
 			}
 		}
-	} while (choice != sponsorList[a].getName || choice != sponsorList[b].getName);
+	} while (choice != sponsorList[a].getName() && choice != sponsorList[b].getName());
+	cout << endl;
 
-	cout << "With the help of your new sponsor now you have " << wallet << "$ to spend on other things." << endl;
+	cout << "With the help of your new sponsor now you have " << (int)wallet << "$ to spend on other things." << endl;
 	cout << "Let's start with technicians. Tip: The more you invest the less the equipment will be prone to break." << endl;
 	cout << "So... How much do you invest in the technicians? ";
 	do {
@@ -135,9 +140,10 @@ void intro() {
 				wallet -= technicians;
 			}
 		}
-	} while (technicians <= 0 && isLower == false);
-	isLower = false;
+	} while (technicians <= 0 || isLower == false);
+	isLower = false; settech = technicians;
 
+	cout << "Current balance: $" << (int)wallet << endl;
 	cout << "Awesome! Now actually the most important thing. How much should we spend on the prizes? ";
 	do {
 
@@ -154,9 +160,10 @@ void intro() {
 				wallet -= prizeMoney;
 			}
 		}
-	} while (prizeMoney <= 0 && isLower == false);
+	} while (prizeMoney <= 0 || isLower == false);
 	isLower = false;
 
+	cout << "Current balance: $" << (int)wallet << endl;
 	cout << "Great! Now it's time for amenities. Tip: The mor you spend here the more happy the people will be. ";
 	do {
 
@@ -173,28 +180,37 @@ void intro() {
 				wallet -= amenities;
 			}
 		}
-	} while (amenities <= 0 && isLower == false);
+	} while (amenities <= 0 || isLower == false);
 
-	cout << "Awesome. You're all set. These are the teams that confirmed their appereance on your event: " << endl;
+	cout << "Current balance: $" << (int)wallet << endl;
+	cout << "Awesome. You're all set. These are the teams that confirmed their appereance on your event: " << endl << endl;
 
 	for (int i = 0; i < 12; i++) {
-		cout << listOfTeams[i].getName << endl;
+		cout << listOfTeams[i].getName() << endl;
 	}
+	cout << endl;
 
-	cout << "And also here are the booths that will be present at the venue: ";
+	cout << "And also here are the booths that will be present at the venue: " << endl;
 
-	if (setamenity <= 500000) {
+	if (amenities <= 500000) {
 		printAmeinites(scroogeSet, 2);
 		printFoodtrucks(instantNoodles, 2);
 	}
 	else {
-		if (setamenity <= 1000000) {
+		if (amenities <= 1000000) {
 			printAmeinites(regularSet, 3);
 			printFoodtrucks(caviar, 3);
 		}
 		else {
 			printAmeinites(generousSet, 4);
 			printFoodtrucks(caviar, 2);
+		}
+	}
+
+	for (int i = 0; i < 4; i++) {
+		if (choice == sponsorList[i].getName()) { 
+			cout << choice << " (your sponsor)" << endl << endl;
+			_choice = sponsorList[i];
 		}
 	}
 

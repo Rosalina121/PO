@@ -7,13 +7,13 @@
 
 using namespace std;
 
-double wallet;
-double happiness;
+double wallet = 0;
+double happiness = 0;
 double technicians = 0, prizeMoney = 0, amenities = 0; //spendings
-double settech, setprize, setamenity; //remembers value set by user, used in the update function
-int duration = 8;
-double visitors;
-double ticketprice;
+double settech = 0; //remembers value set by user, used in the update function
+int duration = 6;
+double visitors = 0;
+double ticketprice = 0, ticketsales = 0;
 
 class Venue {
 	string location, name;
@@ -32,11 +32,13 @@ public:
 		cout << "Name:     " << name << endl;
 		cout << "Location: " << location << endl;
 		cout << "Prestige: " << prestige << endl;
-		cout << "Capacity: " << capacity << endl;
-		cout << "Price:    " << price << endl;
+		cout << "Capacity: " << (int)capacity << endl;
+		cout << "Price:   $" << (int)price << endl;
 	}
 	double getPrice() { return price; }
 	string getName() { return name; }
+	int getPrestige() { return prestige; }
+	double getCap() { return capacity; }
 }actual(" ", " ", 0, 0, 0);
 
 class Sponsor {
@@ -51,7 +53,8 @@ public:
 	}
 	double getOffer() { return moneyOffer; }
 	string getName() { return name; }
-}G2A("G2A",1000000,-200),Intel("Intel",700000,100),Coke("Coca Cola",500000,140),Nvidia("Nvidia",600000,120),God("Lord Christ Himself",2000000,1000);//last one is a placeholder and only for test purposes
+	double getMod() { return happinessModifier; }
+}_choice("",0,0),G2A("G2A",1000000,-200),Intel("Intel",700000,100),Coke("CocaCola",500000,140),Nvidia("Nvidia",600000,120),God("Lord Christ Himself",2000000,1000);//last one is a placeholder and only for test purposes
 
 class Team {
 	static int teamCount;
@@ -97,9 +100,10 @@ public:
 			return visitors * 0.1 * likeable * cashOutput;
 		}
 	}
+	double getLike() { return likeable; }
 };
 
-class FoodTruck :Booth {
+class FoodTruck : public Booth {
 public:
 	FoodTruck(string nam, double cas, double lik){
 		name = nam;
