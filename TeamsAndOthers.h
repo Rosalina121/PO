@@ -2,11 +2,11 @@
 
 //Venues
 Venue Spodek("Katowice", "Spodek", 1000000, 11500, 1), Hala("Wroclaw", "Hala Stulecia", 1200000, 10000, 2), Wembley("London", "Wembley", 3000000, 65000, 4), Seoul("Seoul", "Seould WCS", 2750000, 64000, 3);
-
+Venue listOfVenues[4] = { Spodek, Hala, Wembley, Seoul };
 //Teams
-Team FNC("Fnatic"), TSM("Team Solo Mid"), SKT("SKT T1"), G2("G2 Esports"), RNG("Royal Never Give Up"), UOL("Unicorns of Love"), H2K("H2K Esports"), C9("Cloud 9"), CLG("Counter Logic Gaming"), EDG("Edward Gaming"), KT("KT Rolster"), ROX("ROX Tigers"), FW("Flash Wolves");
-Team listOfTeams[12] = { FNC, TSM, SKT, G2, RNG, UOL, H2K, CLG, C9, EDG, KT, FW };
-
+Team FNC("Fnatic"), TSM("Team Solo Mid"), SKT("SKT T1"), G2("G2 Esports"), RNG("Royal Never Give Up"), UOL("Unicorns of Love"), H2K("H2K Esports"), C9("Cloud 9"), CLG("Counter Logic Gaming"), EDG("Edward Gaming"), KT("KT Rolster"), ROX("ROX Tigers"), FW("Flash Wolves"), NIP("Ninjas in Pyjamas"), MSF("Misfits"), DFX("Delta Fox");
+Team listOfTeams[16] = { FNC, TSM, SKT, G2, RNG, UOL, H2K, CLG, C9, EDG, KT, FW, ROX, NIP, MSF, DFX};
+Team dayOne[8], dayTwo[4], dayThree[2];
 //Booths
 Booth genericMerch("Generic Merch (TM)", true, 10, 2), goodMerch("Good Merch (TM)",true,12,2.2), Redbull("Redbull", false, 8, 1.7), Hyperx("HyperX", true, 12, 0.9), NFS("Need For Seat", true, 3, 2.1), Corsair("Corsair", true, 10, 1.3);
 //Sponsor specific booths

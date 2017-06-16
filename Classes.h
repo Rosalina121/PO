@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <random>
 #include <sstream>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -11,7 +13,7 @@ double wallet = 0;
 double happiness = 0;
 double technicians = 0, prizeMoney = 0, amenities = 0; //spendings
 double settech = 0; //remembers value set by user, used in the update function
-int duration = 6;
+int duration = 4, updateCounter = 1, gameDay = 1;
 double visitors = 0;
 double ticketprice = 0, ticketsales = 0;
 
@@ -64,8 +66,8 @@ public:
 	Team(string nam) {
 		srand(time(NULL)); //seed
 		name = nam;
-		fame = rand() % 10;
-		strenght = rand() % 100;
+		fame = rand() % 9;
+		strenght = rand() % 101;
 	}
 	Team() {
 		name = " ";
@@ -74,7 +76,7 @@ public:
 	}
 	string getName() { return name; }
 	int getFame() { return fame; }
-	//TeamCompare() method to compare two teams and determine the winner
+	int getStrenght() { return strenght; }
 };
 
 class Booth {
@@ -94,7 +96,7 @@ public:
 	string getName() { return name; }
 	double getCash() {
 		if (isGamer == true) {
-			return visitors * 0.1 * likeable * cashOutput * 2;
+			return visitors * 0.3 * likeable * cashOutput;
 		}
 		else {
 			return visitors * 0.1 * likeable * cashOutput;
