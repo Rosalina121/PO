@@ -1,53 +1,54 @@
-#include "TeamsAndOthers.h"
+#include "GlobalFunctions.h"
 
-void clr() {
-	system("cls");
-}
 
-string toUpper(string a) { //changes all letters in a string to uppercase for case insensitive inputs
-	transform(a.begin(), a.end(), a.begin(), ::toupper);
-	return a;
-}
 
 void init() {
 	int choice;
-	string theIf = "yes", inIf;
+	string  inIf;
 	cout << "Choose mode:" << endl << "1. Easy | 2. Normal | 3. Hard" << endl;
-	cin >> choice;
+	
+	choice = checkInput();
 
-	switch (choice) { //add foolproof implementaion
+	switch (choice) {
 	case 1:
 		wallet = 4000000;
 		happiness = 1000;
-		cout << "You choose easy mode." << endl; //check grammar
+		cout << "You choose easy mode." << endl;
+		mode = choice;
 		break;
 	case 2:
 		wallet = 2000000;
 		happiness = 500;
 		cout << "You choose normal mode." << endl;
+		mode = choice;
 		break;
 	case 3:
 		wallet = 1300000;
 		happiness = 100;
 		cout << "You choose hard mode." << endl;
+		mode = choice;
 		break;
 	default:
 		wallet = 2000000;
 		happiness = 500;
 		cout << "Deafulted to normal mode." << endl;
+		mode = 2;
 		break;
 	}
 
-	cout << "The simulation lasts 4 in-game days (two weekends). Would you like to change the duration? (yes/no)" << endl; //foolproof this one too
-	cin >> inIf;
-	if (inIf == theIf) { //foolproofing needed
+	cin.ignore();
+
+	cout << "The simulation lasts 4 in-game days (two weekends). Would you like to change the duration? (yes)" << endl;
+	getline(cin, inIf);
+	inIf=toUpper(inIf);
+	if (inIf == "YES") { 
 		cout << "Specify the duration (no. days, max 10): ";
-		cin >> duration;
+		duration = checkInput();
 	}
 	clr();
 }
 
-bool venueChoice(Venue theVenue) { //fix the inf loop
+bool venueChoice(Venue theVenue) { 
 	if (theVenue.getPrice() > wallet) {
 		cout << "You don't have enough money. Choose another venue." << endl;
 		return false;
@@ -67,7 +68,7 @@ void intro() {
 		b = rand() % 4;
 	} while (b == a);
 
-	Sponsor sponsorList[5] = { G2A,Intel,Coke,Nvidia,God };
+	Sponsor sponsorList[4] = { G2A,Intel,Coke,Nvidia };
 	
 	bool tmp = false;
 	bool isLower = false;
@@ -75,7 +76,7 @@ void intro() {
 
 	cout << "You have $" << (int)wallet << " in your wallet." << endl;
 	cout << "Start by choosing on of the fllowing venues: " << endl;
-
+	cin.ignore();
 	Spodek.showVenue();
 	cout << endl;
 	Hala.showVenue();
@@ -84,9 +85,7 @@ void intro() {
 	cout << endl;
 	Seoul.showVenue();
 	cout << endl;
-
-	cin.ignore();
-	cout << "Type the full name of the desired venue: " << endl; //make it less sensitive, like check just some of the name or sth.
+	cout << "Type the full name of the desired venue: " << endl;
 	getline(cin,choice);
 	choice = toUpper(choice);
 
@@ -112,6 +111,9 @@ void intro() {
 						choice = toUpper(choice);
 					}
 				}
+			}if (tmp == false) {
+				getline(cin, choice);
+				choice = toUpper(choice);
 			}
 		}
 	} while (tmp == false);
@@ -155,13 +157,13 @@ void intro() {
 	cout << "So... How much do you invest in the technicians? ";
 	do {
 
-		cin >> technicians;																							//check or add a check to see if any of the tech, prize and amenit = 0
+		technicians = checkInput();	
 		if (technicians > wallet) {
 			cout << "You don't have enough money. Type in a lower number." << endl;
 		}
 		else {
-			if (technicians <= 0) {
-				cout << "You can't assign a negative number or no money at all. Try again." << endl;
+			if (technicians <= 0 || technicians == wallet) {
+				cout << "You can't assign a negative number or no money at all. Also you can't assign your whole budget. Try again." << endl;
 			}
 			else {
 				isLower = true;
@@ -169,19 +171,19 @@ void intro() {
 			}
 		}
 	} while (technicians <= 0 || isLower == false);
-	isLower = false; settech = technicians;
+	isLower = false;
 
 	cout << "Current balance: $" << (int)wallet << endl;
 	cout << "Awesome! Now actually the most important thing. How much should we spend on the prizes? ";
 	do {
 
-		cin >> prizeMoney;
+		prizeMoney = checkInput();
 		if (prizeMoney > wallet) {
 			cout << "You don't have enough money. Type in a lower number." << endl;
 		}
 		else {
-			if (prizeMoney <= 0) {
-				cout << "You can't assign a negative number or no money at all. Try again." << endl;
+			if (prizeMoney <= 0 || prizeMoney == wallet) {
+				cout << "You can't assign a negative number or no money at all. Also you can't assign your whole budget. Try again." << endl;
 			}
 			else {
 				isLower = true;
@@ -195,7 +197,7 @@ void intro() {
 	cout << "Great! Now it's time for amenities. Tip: The more you spend here the more happy the people will be. ";
 	do {
 
-		cin >> amenities;
+		amenities = checkInput();
 		if (amenities > wallet) {
 			cout << "You don't have enough money. Type in a lower number." << endl;
 		}
@@ -214,8 +216,10 @@ void intro() {
 	cout << "Current balance: $" << (int)wallet << endl;
 	cout << "Awesome. You're all set. These are the teams that confirmed their appereance on your event: " << endl << endl;
 
-	for (int i = 0; i < 12; i++) {
-		cout << toUpper(listOfTeams[i].getName()) << endl;
+	initializeTeams();
+
+	for (int i = 0; i < 16; i++) {
+		cout << listOfTeams[i].getName() << endl;
 	}
 	cout << endl;
 
@@ -237,7 +241,7 @@ void intro() {
 	}
 
 	for (int i = 0; i < 4; i++) {
-		if (choice == sponsorList[i].getName()) { 
+		if (choice == toUpper(sponsorList[i].getName())) { 
 			cout << choice << " (your sponsor)" << endl << endl;
 			_choice = sponsorList[i];
 		}
@@ -245,7 +249,8 @@ void intro() {
 
 
 	cout << "And last but not least, the price of the tickets. You may type in 0 to make the event admission free." << endl;
-	cin >> ticketprice;
+	ticketprice = checkInput();
 
 	cout << "Alright! Let's start, shall we?" << endl;
+	clr();
 }

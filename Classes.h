@@ -5,6 +5,7 @@
 #include <random>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 
 
 using namespace std;
@@ -12,8 +13,7 @@ using namespace std;
 double wallet = 0;
 double happiness = 0;
 double technicians = 0, prizeMoney = 0, amenities = 0; //spendings
-double settech = 0; //remembers value set by user, used in the update function
-int duration = 4, updateCounter = 1, gameDay = 1;
+int duration = 4, updateCounter = 0, gameDay = 1, brokenCameras = 0, brokenComputers = 0, mode = 0;
 double visitors = 0;
 double ticketprice = 0, ticketsales = 0;
 
@@ -56,25 +56,22 @@ public:
 	double getOffer() { return moneyOffer; }
 	string getName() { return name; }
 	double getMod() { return happinessModifier; }
-}_choice("",0,0),G2A("G2A",1000000,-200),Intel("Intel",700000,100),Coke("CocaCola",500000,140),Nvidia("Nvidia",600000,120),God("Lord Christ Himself",2000000,1000);//last one is a placeholder and only for test purposes
+}_choice("", 0, 0), G2A("G2A", 1000000, -200), Intel("Intel", 700000, 100), Coke("Coca Cola", 500000, 140), Nvidia("Nvidia", 600000, 120);
 
 class Team {
-	static int teamCount;
 	string name;
 	int fame, strenght; //both randomly generated, fame 0-9, str 0-99
 public:
-	Team(string nam) {
-		srand(time(NULL)); //seed
-		name = nam;
-		fame = rand() % 9;
-		strenght = rand() % 101;
-	}
 	Team() {
+		mt19937 rng(99); //seed
+		uniform_int_distribution<int> gen(0, 9);
 		name = " ";
-		fame = 0;
-		strenght = 0;
+		fame = gen(rng);
+		uniform_int_distribution<int> gen2(0, 90);
+		strenght = gen2(rng);
 	}
 	string getName() { return name; }
+	void setName(string newName) { name = newName; }
 	int getFame() { return fame; }
 	int getStrenght() { return strenght; }
 };
@@ -108,6 +105,7 @@ public:
 class FoodTruck : public Booth {
 public:
 	FoodTruck(string nam, double cas, double lik){
+		isGamer = false;
 		name = nam;
 		cashOutput = cas;
 		likeable = lik;
